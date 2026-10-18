@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { InquiryForm } from "@/components/inquiry-form";
 import { PageHero, SectionHeading } from "@/components/page-hero";
+import { Reveal } from "@/components/reveal";
 import { site } from "@/lib/site-data";
 
 export const metadata: Metadata = {
@@ -19,16 +20,17 @@ export default function ContactPage() {
       />
       <section className="section-shell">
         <div className="grid gap-16 lg:grid-cols-2">
-          <div>
+          <Reveal variant="left">
             <SectionHeading
               eyebrow="Our Offices"
               title="Globally positioned."
             />
             <div className="mt-10 divide-y divide-inverse-line border-y border-inverse-line">
-              {site.offices.map((office) => (
-                <div
+              {site.offices.map((office, index) => (
+                <Reveal
                   key={office.city}
                   className="flex items-center justify-between py-5"
+                  delay={index * 40}
                 >
                   <div>
                     <h3 className="font-serif text-2xl">
@@ -43,11 +45,11 @@ export default function ContactPage() {
                   <p className="text-[0.65rem] uppercase tracking-[0.14em] text-gold">
                     {office.region}
                   </p>
-                </div>
+                </Reveal>
               ))}
             </div>
             <div className="mt-10 space-y-5">
-              <div>
+              <Reveal>
                 <p className="contact-label">Partnerships & Media</p>
                 <a
                   className="contact-email"
@@ -55,8 +57,8 @@ export default function ContactPage() {
                 >
                   {site.emails.partnerships}
                 </a>
-              </div>
-              <div>
+              </Reveal>
+              <Reveal delay={50}>
                 <p className="contact-label">General Inquiries</p>
                 <a
                   className="contact-email"
@@ -64,16 +66,25 @@ export default function ContactPage() {
                 >
                   {site.emails.info}
                 </a>
-              </div>
+              </Reveal>
+              <Reveal delay={100}>
+                <p className="contact-label">Support</p>
+                <a
+                  className="contact-email"
+                  href={`mailto:${site.emails.support}`}
+                >
+                  {site.emails.support}
+                </a>
+              </Reveal>
             </div>
-          </div>
+          </Reveal>
 
-          <div>
+          <Reveal variant="right">
             <p className="section-kicker">Inquiry Form</p>
             <div className="mt-8">
               <InquiryForm kind="contact" />
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
     </main>

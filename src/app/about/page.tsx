@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ShieldCheck } from "lucide-react";
 import { PageHero, SectionHeading } from "@/components/page-hero";
+import { Reveal } from "@/components/reveal";
 import { leadership, site } from "@/lib/site-data";
 
 export const metadata: Metadata = {
@@ -28,16 +29,18 @@ export default function AboutPage() {
             label: "Vision",
             copy: "A world in which geography never determines access to the right specialist, technology, or standard of care.",
           },
-        ].map((item) => (
-          <article
+        ].map((item, index) => (
+          <Reveal
             key={item.label}
+            as="article"
+            variant={index === 0 ? "left" : "right"}
             className="border-b border-inverse-line bg-surface p-8 sm:p-12 md:border-b-0 md:odd:border-r"
           >
             <p className="section-kicker">{item.label}</p>
             <p className="mt-8 font-serif text-3xl leading-snug sm:text-4xl">
               {item.copy}
             </p>
-          </article>
+          </Reveal>
         ))}
       </section>
 
@@ -47,7 +50,10 @@ export default function AboutPage() {
             eyebrow="Our Story"
             title="Built for complex care across borders."
           />
-          <div className="space-y-6 text-base leading-8 text-muted-foreground">
+          <Reveal
+            variant="right"
+            className="space-y-6 text-base leading-8 text-muted-foreground"
+          >
             <p>
               MultiVerse Group was established to solve a critical gap in global
               healthcare: discerning patients could identify world-class
@@ -61,7 +67,7 @@ export default function AboutPage() {
               appropriateness, operational transparency, and an uncompromising
               commitment to patient confidentiality.
             </p>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -72,8 +78,10 @@ export default function AboutPage() {
         />
         <div className="mt-12 grid border-l border-t border-inverse-line md:grid-cols-6 xl:grid-cols-5">
           {leadership.map((person, index) => (
-            <article
-              key={person.name}
+            <Reveal
+              key={`${person.name}-${person.role}`}
+              as="article"
+              delay={(index % 5) * 50}
               className={`border-b border-r border-inverse-line p-7 md:col-span-2 xl:col-span-1 ${
                 index === 3 ? "md:col-start-4 xl:col-start-auto" : ""
               }`}
@@ -85,7 +93,7 @@ export default function AboutPage() {
               <p className="mt-3 text-xs uppercase tracking-[0.12em] text-muted-foreground">
                 {person.role}
               </p>
-            </article>
+            </Reveal>
           ))}
         </div>
       </section>
@@ -96,16 +104,17 @@ export default function AboutPage() {
           title="Trust, independently reinforced."
         />
         <div className="mt-12 grid border-l border-t border-inverse-line sm:grid-cols-2 lg:grid-cols-4">
-          {site.compliance.map((item) => (
-            <div
+          {site.compliance.map((item, index) => (
+            <Reveal
               key={item}
               className="flex min-h-40 items-center gap-4 border-b border-r border-inverse-line p-7"
+              delay={index * 50}
             >
               <ShieldCheck className="size-5 shrink-0 text-gold" aria-hidden />
               <p className="text-xs font-semibold uppercase tracking-[0.14em]">
                 {item}
               </p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>
@@ -116,8 +125,13 @@ export default function AboutPage() {
           title="Five strategic gateways."
         />
         <div className="mt-12 grid gap-px bg-inverse-line sm:grid-cols-2 lg:grid-cols-5">
-          {site.offices.map((office) => (
-            <article key={office.city} className="bg-surface p-7">
+          {site.offices.map((office, index) => (
+            <Reveal
+              key={office.city}
+              as="article"
+              className="bg-surface p-7"
+              delay={index * 50}
+            >
               <p className="text-[0.65rem] uppercase tracking-[0.14em] text-gold">
                 {office.region}
               </p>
@@ -127,7 +141,7 @@ export default function AboutPage() {
                   : office.city}
               </h3>
               <p className="mt-3 text-sm text-muted-foreground">{office.label}</p>
-            </article>
+            </Reveal>
           ))}
         </div>
       </section>

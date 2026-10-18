@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { ShieldCheck } from "lucide-react";
+import { Reveal } from "@/components/reveal";
 import { site } from "@/lib/site-data";
 
 export function SiteFooter() {
   return (
     <footer className="border-t border-inverse-line bg-surface-dark">
-      <div className="mx-auto max-w-[1500px] px-5 py-16 sm:px-8 lg:px-12">
+      <Reveal className="mx-auto max-w-[1500px] px-5 py-16 sm:px-8 lg:px-12">
         <div className="grid gap-12 lg:grid-cols-4">
           <div>
             <p className="font-serif text-3xl">MultiVerse Group</p>
@@ -58,6 +59,15 @@ export function SiteFooter() {
                   {site.emails.info}
                 </a>
               </div>
+              <div>
+                <p className="contact-label">Support</p>
+                <a
+                  className="contact-email"
+                  href={`mailto:${site.emails.support}`}
+                >
+                  {site.emails.support}
+                </a>
+              </div>
             </div>
             <p className="mt-6 text-xs leading-6 text-muted-foreground">
               California · New York · London
@@ -83,7 +93,7 @@ export function SiteFooter() {
             </Link>
           </div>
         </div>
-      </div>
+      </Reveal>
     </footer>
   );
 }

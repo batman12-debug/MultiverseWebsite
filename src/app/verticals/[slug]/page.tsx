@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { InquiryDialog } from "@/components/inquiry-dialog";
 import { PageHero, SectionHeading } from "@/components/page-hero";
+import { Reveal } from "@/components/reveal";
 import { getVertical, verticals } from "@/lib/site-data";
 
 export function generateStaticParams() {
@@ -55,33 +56,38 @@ export default async function VerticalDetailPage({
 
       <section className="section-shell">
         <div className="grid gap-14 lg:grid-cols-[1fr_0.7fr]">
-          <div>
+          <Reveal variant="left">
             <SectionHeading
               eyebrow="Treatment Portfolio"
               title="Specialist pathways."
             />
             <div className="mt-10 grid border-l border-t border-inverse-line sm:grid-cols-2">
               {vertical.treatments.map((treatment, index) => (
-                <div
+                <Reveal
                   key={treatment}
                   className="flex min-h-20 items-center gap-4 border-b border-r border-inverse-line bg-surface px-5"
+                  delay={(index % 4) * 40}
                 >
                   <span className="text-xs text-gold">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <p className="text-sm leading-6">{treatment}</p>
-                </div>
+                </Reveal>
               ))}
             </div>
-          </div>
+          </Reveal>
 
-          <aside className="border border-inverse-line bg-surface p-8 lg:sticky lg:top-28 lg:self-start">
+          <Reveal
+            variant="right"
+            as="aside"
+            className="border border-inverse-line bg-surface p-8 lg:sticky lg:top-28 lg:self-start"
+          >
             <p className="section-kicker">Ideal Candidate</p>
             <p className="mt-6 text-sm leading-7 text-muted-foreground">
               {vertical.candidate}
             </p>
             <div className="mt-8">{cta}</div>
-          </aside>
+          </Reveal>
         </div>
       </section>
     </main>

@@ -1,9 +1,10 @@
 import Link from "next/link";
+import { Reveal } from "@/components/reveal";
 
 export default function NotFound() {
   return (
     <div className="flex min-h-[70vh] items-center justify-center px-4 pt-28">
-      <div className="max-w-md text-center">
+      <Reveal className="max-w-md text-center" immediate>
         <h1 className="text-7xl font-bold text-foreground">404</h1>
         <h2 className="mt-4 text-xl font-semibold text-foreground">
           Page not found
@@ -16,7 +17,7 @@ export default function NotFound() {
             Go home
           </Link>
         </div>
-      </div>
+      </Reveal>
     </div>
   );
 }

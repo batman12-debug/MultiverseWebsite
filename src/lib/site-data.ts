@@ -4,8 +4,9 @@ export const site = {
   description:
     "MultiVerse Group is a global healthcare facilitator connecting high-net-worth patients with tier-1 medical institutions worldwide.",
   emails: {
-    partnerships: "partnerships@multiversegrp.com",
-    info: "info@multiversegrp.com",
+    partnerships: "partnership@multiversegroupllc.com",
+    info: "info@multiversegroupllc.com",
+    support: "support@multiversegroupllc.com",
   },
   compliance: ["JCI-Aligned Standards", "HIPAA", "GDPR", "ATA"] as const,
   stats: [
@@ -176,8 +177,8 @@ export function getVertical(slug: string) {
 }
 
 export const leadership = [
-  { name: "Ifraeem James", role: "Co-Founder & Chief Executive Officer", initials: "IJ" },
-  { name: "Muhammad Umair", role: "Co-Founder & Chief Operating Officer", initials: "MU" },
+  { name: "Muhammad Umair", role: "Co-Founder & Chief Executive Officer", initials: "MU" },
+  { name: "Muhammad Inam", role: "Co-Founder & Chief Operating Officer", initials: "MI" },
   { name: "Dr. Elena Marlow", role: "Chief Medical Officer", initials: "EM" },
   { name: "Brian Paul", role: "Head of Global Partnerships", initials: "BP" },
   { name: "Sofia Chen", role: "Director of Patient Concierge", initials: "SC" },

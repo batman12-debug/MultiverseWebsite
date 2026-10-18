@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/page-hero";
+import { Reveal } from "@/components/reveal";
 import { site } from "@/lib/site-data";
 
 export const metadata: Metadata = {
@@ -36,13 +37,18 @@ export default function PrivacyPage() {
       />
       <section className="section-shell">
         <div className="mx-auto max-w-3xl divide-y divide-inverse-line border-y border-inverse-line">
-          {sections.map((section) => (
-            <article key={section.title} className="py-10">
+          {sections.map((section, index) => (
+            <Reveal
+              key={section.title}
+              as="article"
+              className="py-10"
+              delay={index * 45}
+            >
               <h2 className="font-serif text-3xl">{section.title}</h2>
               <p className="mt-5 text-base leading-8 text-muted-foreground">
                 {section.copy}
               </p>
-            </article>
+            </Reveal>
           ))}
         </div>
       </section>

@@ -112,6 +112,8 @@
     oklch(8% 0.012 260 / 0.82) 48%,
     oklch(6% 0.008 260 / 0.18) 100%
   );
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 @layer base {
@@ -188,12 +190,17 @@
     text-transform: uppercase;
     font-size: 0.65rem;
     font-weight: 700;
-    transition: color 0.2s;
+    transition: color 160ms var(--ease-out);
   }
 
-  .nav-link:hover,
   .nav-link[data-active="true"] {
     color: var(--gold);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .nav-link:hover {
+      color: var(--gold);
+    }
   }
 
   .footer-label {
@@ -220,14 +227,16 @@
     font-size: 0.875rem;
     text-decoration: underline transparent;
     transition:
-      color 0.5s ease-out,
-      text-decoration-color 0.5s ease-out;
+      color 200ms var(--ease-out),
+      text-decoration-color 200ms var(--ease-out);
     display: block;
   }
 
-  .contact-email:hover {
-    color: var(--gold);
-    text-decoration-color: var(--gold);
+  @media (hover: hover) and (pointer: fine) {
+    .contact-email:hover {
+      color: var(--gold);
+      text-decoration-color: var(--gold);
+    }
   }
 
   .form-label {
@@ -291,7 +300,10 @@
     font-weight: 600;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    transition: all 0.5s ease-out;
+    transition:
+      transform 160ms var(--ease-out),
+      border-color 200ms var(--ease-out),
+      color 200ms var(--ease-out);
   }
 
   .brand-btn::before {
@@ -302,17 +314,22 @@
     transform-origin: left;
     transform: scaleX(0);
     background: var(--gold);
-    transition: transform 0.5s ease-out;
+    transition: transform 220ms var(--ease-out);
   }
 
-  .brand-btn:hover {
-    border-color: var(--gold);
-    color: var(--gold-foreground);
-    transform: scale(1.02);
+  .brand-btn:active {
+    transform: scale(0.97);
   }
 
-  .brand-btn:hover::before {
-    transform: scaleX(1);
+  @media (hover: hover) and (pointer: fine) {
+    .brand-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold-foreground);
+    }
+
+    .brand-btn:hover::before {
+      transform: scaleX(1);
+    }
   }
 
   .brand-btn-solid {
@@ -325,21 +342,26 @@
     display: none;
   }
 
-  .brand-btn-solid:hover {
-    opacity: 0.92;
-    color: var(--gold-foreground);
+  @media (hover: hover) and (pointer: fine) {
+    .brand-btn-solid:hover {
+      opacity: 0.92;
+      color: var(--gold-foreground);
+    }
   }
 
   .premium-card {
     transition:
-      border-color 0.5s ease-out,
-      background-color 0.5s ease-out;
+      border-color 200ms var(--ease-out),
+      background-color 200ms var(--ease-out),
+      transform 200ms var(--ease-out);
     position: relative;
     overflow: hidden;
   }
 
-  .premium-card:hover {
-    border-color: var(--gold);
+  @media (hover: hover) and (pointer: fine) {
+    .premium-card:hover {
+      border-color: var(--gold);
+    }
   }
 
   .bg-hero-overlay {
@@ -359,8 +381,49 @@
     animation: 28s linear infinite marquee-scroll;
   }
 
-  .marquee-track:hover {
-    animation-play-state: paused;
+  @media (hover: hover) and (pointer: fine) {
+    .marquee-track:hover {
+      animation-play-state: paused;
+    }
+  }
+
+  /*
+   * React-owned reveals (<Reveal />):
+   * - SSR / first client paint: visible (no reveal-pending yet)
+   * - After mount: reveal-pending hides, then is-revealed animates in
+   */
+  .reveal-item {
+    transition:
+      opacity 560ms var(--ease-out),
+      transform 560ms var(--ease-out),
+      clip-path 700ms var(--ease-in-out);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .reveal-item.reveal-pending {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0) scale(0.985);
+    will-change: opacity, transform;
+  }
+
+  .reveal-item.reveal-left.reveal-pending {
+    transform: translate3d(-20px, 0, 0) scale(0.985);
+  }
+
+  .reveal-item.reveal-right.reveal-pending {
+    transform: translate3d(20px, 0, 0) scale(0.985);
+  }
+
+  .reveal-item.reveal-clip.reveal-pending {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0 0 100% 0);
+  }
+
+  .reveal-item.is-revealed {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0 0 0 0);
   }
 }
 
@@ -372,4 +435,19 @@
   .marquee-track {
     animation: none;
   }
+
+  .reveal-item,
+  .reveal-item.reveal-pending,
+  .reveal-item.is-revealed {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+    transition: none;
+    will-change: auto;
+  }
+
+  .brand-btn:active {
+    transform: none;
+  }
 }
+

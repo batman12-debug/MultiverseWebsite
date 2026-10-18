@@ -6,6 +6,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { PageHero, SectionHeading } from "@/components/page-hero";
+import { Reveal } from "@/components/reveal";
 import {
   conciergeServices,
   conciergeStages,
@@ -35,15 +36,17 @@ export default function ConciergePage() {
         />
         <div className="mt-12 grid border-l border-t border-inverse-line sm:grid-cols-2 lg:grid-cols-3">
           {conciergeStages.map((stage, index) => (
-            <article
+            <Reveal
               key={stage}
+              as="article"
               className="min-h-44 border-b border-r border-inverse-line bg-surface p-7"
+              delay={(index % 3) * 50}
             >
               <p className="text-xs text-gold">
                 {String(index + 1).padStart(2, "0")}
               </p>
               <h3 className="mt-12 font-serif text-2xl">{stage}</h3>
-            </article>
+            </Reveal>
           ))}
         </div>
       </section>
@@ -54,17 +57,22 @@ export default function ConciergePage() {
           title="Every detail, anticipated."
         />
         <div className="mt-12 grid gap-px bg-inverse-line sm:grid-cols-2 lg:grid-cols-4">
-          {conciergeServices.map((service) => (
-            <article key={service} className="bg-background p-7">
+          {conciergeServices.map((service, index) => (
+            <Reveal
+              key={service}
+              as="article"
+              className="bg-background p-7"
+              delay={index * 50}
+            >
               <h3 className="mt-10 font-serif text-2xl">{service}</h3>
-            </article>
+            </Reveal>
           ))}
         </div>
       </section>
 
       <section className="section-shell">
         <div className="grid gap-14 lg:grid-cols-2">
-          <div>
+          <Reveal variant="left">
             <SectionHeading
               eyebrow="Frequently Asked Questions"
               title="Clarity before every decision."
@@ -75,23 +83,29 @@ export default function ConciergePage() {
                 {site.emails.info}
               </a>
             </div>
-          </div>
-          <Accordion type="single" collapsible className="border-y border-inverse-line">
-            {faqs.map((faq) => (
-              <AccordionItem
-                key={faq.q}
-                value={faq.q}
-                className="border-inverse-line"
-              >
-                <AccordionTrigger className="py-5 text-left font-serif text-xl hover:no-underline">
-                  {faq.q}
-                </AccordionTrigger>
-                <AccordionContent className="pb-5 text-sm leading-7 text-muted-foreground">
-                  {faq.a}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+          </Reveal>
+          <Reveal variant="right">
+            <Accordion
+              type="single"
+              collapsible
+              className="border-y border-inverse-line"
+            >
+              {faqs.map((faq) => (
+                <AccordionItem
+                  key={faq.q}
+                  value={faq.q}
+                  className="border-inverse-line"
+                >
+                  <AccordionTrigger className="py-5 text-left font-serif text-xl hover:no-underline">
+                    {faq.q}
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-5 text-sm leading-7 text-muted-foreground">
+                    {faq.a}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </Reveal>
         </div>
       </section>
     </main>

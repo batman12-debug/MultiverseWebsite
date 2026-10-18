@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { InquiryForm } from "@/components/inquiry-form";
 import { PageHero, SectionHeading } from "@/components/page-hero";
+import { Reveal } from "@/components/reveal";
 import {
   onboardingSteps,
   partnerValues,
@@ -25,23 +26,26 @@ export default function PartnersPage() {
       />
 
       <section className="grid border-b border-inverse-line lg:grid-cols-2">
-        <div className="section-shell">
+        <Reveal variant="left" className="section-shell">
           <SectionHeading
             eyebrow="Institutional Value"
             title="A measured growth channel."
           />
           <div className="mt-10 divide-y divide-inverse-line border-y border-inverse-line">
-            {partnerValues.map((item) => (
-              <div key={item.title} className="py-6">
+            {partnerValues.map((item, index) => (
+              <Reveal key={item.title} className="py-6" delay={index * 45}>
                 <h3 className="font-serif text-2xl">{item.title}</h3>
                 <p className="mt-2 text-sm leading-6 text-muted-foreground">
                   {item.copy}
                 </p>
-              </div>
+              </Reveal>
             ))}
           </div>
-        </div>
-        <div className="relative min-h-[35rem] border-t border-inverse-line lg:border-l lg:border-t-0">
+        </Reveal>
+        <Reveal
+          variant="clip"
+          className="relative min-h-[35rem] border-t border-inverse-line lg:border-l lg:border-t-0"
+        >
           <Image
             src="/assets/executive-boardroom.jpg"
             alt="Executive boardroom for strategic clinical partnerships"
@@ -49,7 +53,7 @@ export default function PartnersPage() {
             className="object-cover"
             sizes="(max-width: 1024px) 100vw, 50vw"
           />
-        </div>
+        </Reveal>
       </section>
 
       <section className="section-shell">
@@ -58,17 +62,19 @@ export default function PartnersPage() {
           title="Structures built around performance."
         />
         <div className="mt-12 grid border-l border-t border-inverse-line lg:grid-cols-3">
-          {partnershipModels.map((model) => (
-            <article
+          {partnershipModels.map((model, index) => (
+            <Reveal
               key={model.title}
+              as="article"
               className="min-h-72 border-b border-r border-inverse-line bg-surface p-8"
+              delay={index * 55}
             >
               <p className="text-xs text-gold">{model.number}</p>
               <h3 className="mt-10 font-serif text-2xl">{model.title}</h3>
               <p className="mt-4 text-sm leading-7 text-muted-foreground">
                 {model.copy}
               </p>
-            </article>
+            </Reveal>
           ))}
         </div>
       </section>
@@ -80,22 +86,23 @@ export default function PartnersPage() {
         />
         <div className="mt-12 grid border-l border-t border-inverse-line sm:grid-cols-2 lg:grid-cols-4">
           {onboardingSteps.map((step, index) => (
-            <div
+            <Reveal
               key={step}
               className="min-h-44 border-b border-r border-inverse-line bg-background p-7"
+              delay={index * 50}
             >
               <p className="text-xs text-gold">
                 {String(index + 1).padStart(2, "0")}
               </p>
               <h3 className="mt-12 font-serif text-2xl">{step}</h3>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>
 
       <section className="section-shell">
         <div className="grid gap-14 lg:grid-cols-2">
-          <div>
+          <Reveal variant="left">
             <SectionHeading
               eyebrow="Apply"
               title="Initiate an institutional review."
@@ -110,8 +117,10 @@ export default function PartnersPage() {
                 {site.emails.partnerships}
               </a>
             </div>
-          </div>
-          <InquiryForm kind="partner" />
+          </Reveal>
+          <Reveal variant="right">
+            <InquiryForm kind="partner" />
+          </Reveal>
         </div>
       </section>
     </main>

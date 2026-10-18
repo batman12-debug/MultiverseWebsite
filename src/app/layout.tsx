@@ -37,6 +37,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       className={`${inter.variable} ${playfair.variable} h-full dark`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
