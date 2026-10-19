@@ -70,9 +70,9 @@ export function SiteFooter() {
               </div>
             </div>
             <p className="mt-6 text-xs leading-6 text-muted-foreground">
-              California · New York · London
+              California · New York · Wyoming · London
               <br />
-              Dubai · Singapore
+              Dubai · Singapore · Pakistan
             </p>
           </div>
         </div>

@@ -73,7 +73,7 @@ export default function HomePage() {
               immediate
               delay={240}
             >
-              California · New York · London · Dubai · Singapore
+              California · New York · Wyoming · London · Dubai · Singapore · Pakistan
             </Reveal>
           </div>
         </div>

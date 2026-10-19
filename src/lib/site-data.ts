@@ -18,9 +18,11 @@ export const site = {
   offices: [
     { city: "California", label: "Global Headquarters", region: "USA" },
     { city: "New York", label: "Patient Coordination", region: "United States" },
+    { city: "Wyoming", label: "Regional Office", region: "United States" },
     { city: "London", label: "European Office", region: "Europe" },
     { city: "Dubai", label: "Regional Office", region: "Middle East" },
     { city: "Singapore", label: "Regional Office", region: "Asia Pacific" },
+    { city: "Pakistan", label: "Regional Office", region: "South Asia" },
   ] as const,
   nav: [
     { label: "Home", href: "/" },
