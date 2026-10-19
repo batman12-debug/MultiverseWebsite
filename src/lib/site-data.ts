@@ -177,7 +177,7 @@ export function getVertical(slug: string) {
 }
 
 export const leadership = [
-  { name: "Muhammad Umair", role: "Co-Founder, CEO and COO", initials: "MU" },
+  { name: "Muhammad Umair", role: "Co-Founder, CEO & COO", initials: "MU" },
   { name: "Muhammad Inam", role: "Managing Director", initials: "MI" },
   { name: "Dr. Fleming", role: "Chief Medical Officer", initials: "DF" },
   { name: "Brian Paul", role: "Head of Global Partnerships", initials: "BP" },
