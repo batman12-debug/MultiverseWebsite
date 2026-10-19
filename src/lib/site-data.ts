@@ -177,8 +177,8 @@ export function getVertical(slug: string) {
 }
 
 export const leadership = [
-  { name: "Muhammad Umair", role: "Co-Founder & Chief Executive Officer", initials: "MU" },
-  { name: "Muhammad Inam", role: "Co-Founder & Chief Operating Officer", initials: "MI" },
+  { name: "Muhammad Umair", role: "Co-Founder, CEO and COO", initials: "MU" },
+  { name: "Muhammad Inam", role: "Managing Director", initials: "MI" },
   { name: "Dr. Elena Marlow", role: "Chief Medical Officer", initials: "EM" },
   { name: "Brian Paul", role: "Head of Global Partnerships", initials: "BP" },
   { name: "Sofia Chen", role: "Director of Patient Concierge", initials: "SC" },
