@@ -179,9 +179,9 @@ export function getVertical(slug: string) {
 export const leadership = [
   { name: "Muhammad Umair", role: "Co-Founder, CEO and COO", initials: "MU" },
   { name: "Muhammad Inam", role: "Managing Director", initials: "MI" },
-  { name: "Dr. Elena Marlow", role: "Chief Medical Officer", initials: "EM" },
+  { name: "Dr. Fleming", role: "Chief Medical Officer", initials: "DF" },
   { name: "Brian Paul", role: "Head of Global Partnerships", initials: "BP" },
-  { name: "Sofia Chen", role: "Director of Patient Concierge", initials: "SC" },
+  { name: "Dr. Alina Robertson", role: "Director of Patient Concierge", initials: "AR" },
 ] as const;
 
 export const journeySteps = [
