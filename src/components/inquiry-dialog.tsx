@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useState, useTransition, type ReactNode } from "react";
 import { ArrowRight, Check, X } from "lucide-react";
 import {
   Dialog,
@@ -10,6 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { sendInquiry } from "@/lib/send-inquiry";
 import { specialtyOptions } from "@/lib/site-data";
 
 type InquiryType = "clinic" | "patient";
@@ -22,6 +23,8 @@ export function InquiryDialog({
   trigger: ReactNode;
 }) {
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [pending, startTransition] = useTransition();
   const isClinic = type === "clinic";
 
   return (
@@ -86,11 +89,36 @@ export function InquiryDialog({
               className="mt-8 grid gap-5 sm:grid-cols-2"
               onSubmit={(e) => {
                 e.preventDefault();
-                setSubmitted(true);
+                setError(null);
+                const form = e.currentTarget;
+                const data = new FormData(form);
+                const fields = Object.fromEntries(
+                  [...data.entries()].map(([key, value]) => [
+                    key,
+                    String(value),
+                  ]),
+                );
+
+                startTransition(async () => {
+                  const result = await sendInquiry({
+                    source: isClinic
+                      ? "Dialog — Clinical Alliance Inquiry"
+                      : "Dialog — Patient Concierge Inquiry",
+                    fields,
+                  });
+
+                  if (!result.ok) {
+                    setError(result.error);
+                    return;
+                  }
+
+                  setSubmitted(true);
+                  form.reset();
+                });
               }}
             >
               <Field label="Full name">
-                <input required name="name" autoComplete="name" />
+                <input required name="Full name" autoComplete="name" />
               </Field>
               <Field label="Work email">
                 <input
@@ -101,16 +129,23 @@ export function InquiryDialog({
                 />
               </Field>
               <Field label={isClinic ? "Institution" : "Country of residence"}>
-                <input required name="organization" />
+                <input
+                  required
+                  name={isClinic ? "Institution" : "Country of residence"}
+                />
               </Field>
               <Field label="Phone">
-                <input required type="tel" name="phone" autoComplete="tel" />
+                <input required type="tel" name="Phone" autoComplete="tel" />
               </Field>
               <Field
                 label={isClinic ? "Clinical specialty" : "Area of care"}
                 wide
               >
-                <select required name="specialty" defaultValue="">
+                <select
+                  required
+                  name={isClinic ? "Clinical specialty" : "Area of care"}
+                  defaultValue=""
+                >
                   <option value="" disabled>
                     Select an area
                   </option>
@@ -122,11 +157,20 @@ export function InquiryDialog({
                 </select>
               </Field>
               <Field label="How can we assist?" wide>
-                <textarea required name="message" rows={4} />
+                <textarea required name="Message" rows={4} />
               </Field>
+              {error ? (
+                <p className="text-sm text-red-400 sm:col-span-2" role="alert">
+                  {error}
+                </p>
+              ) : null}
               <div className="sm:col-span-2">
-                <button type="submit" className="brand-btn w-full sm:w-auto">
-                  Submit confidential inquiry{" "}
+                <button
+                  type="submit"
+                  className="brand-btn w-full sm:w-auto"
+                  disabled={pending}
+                >
+                  {pending ? "Sending…" : "Submit confidential inquiry"}{" "}
                   <ArrowRight className="size-4" aria-hidden />
                 </button>
               </div>

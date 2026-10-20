@@ -3,6 +3,7 @@ import Image from "next/image";
 import { InquiryForm } from "@/components/inquiry-form";
 import { PageHero, SectionHeading } from "@/components/page-hero";
 import { Reveal } from "@/components/reveal";
+import MinimalCarouselDemo from "@/components/ui/demo";
 import {
   onboardingSteps,
   partnerValues,
@@ -54,6 +55,22 @@ export default function PartnersPage() {
             sizes="(max-width: 1024px) 100vw, 50vw"
           />
         </Reveal>
+      </section>
+
+      <section className="section-shell border-b border-inverse-line">
+        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <SectionHeading
+            eyebrow="Network"
+            title="Our Partners."
+            copy="Institutions selected for clinical excellence, international patient readiness, and operational rigor."
+          />
+          <Reveal
+            variant="right"
+            className="flex max-h-[36rem] items-start justify-center overflow-y-auto lg:justify-end"
+          >
+            <MinimalCarouselDemo />
+          </Reveal>
+        </div>
       </section>
 
       <section className="section-shell">

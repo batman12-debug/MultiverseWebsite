@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { ArrowRight, Check } from "lucide-react";
+import { sendInquiry } from "@/lib/send-inquiry";
 
 type Kind = "contact" | "partner";
 
 export function InquiryForm({ kind }: { kind: Kind }) {
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [pending, startTransition] = useTransition();
 
   if (submitted) {
     return (
@@ -25,23 +28,46 @@ export function InquiryForm({ kind }: { kind: Kind }) {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        setSubmitted(true);
+        setError(null);
+        const form = e.currentTarget;
+        const data = new FormData(form);
+        const fields = Object.fromEntries(
+          [...data.entries()].map(([key, value]) => [key, String(value)]),
+        );
+
+        startTransition(async () => {
+          const result = await sendInquiry({
+            source:
+              kind === "partner"
+                ? "Partners — Confidential Inquiry"
+                : "Contact — Confidential Inquiry",
+            fields,
+          });
+
+          if (!result.ok) {
+            setError(result.error);
+            return;
+          }
+
+          setSubmitted(true);
+          form.reset();
+        });
       }}
       className="grid gap-5 sm:grid-cols-2"
     >
       {kind === "partner" ? (
         <>
           <Field label="Clinic Name">
-            <input name="clinic" required />
+            <input name="Clinic Name" required />
           </Field>
           <Field label="Country">
-            <input name="country" required />
+            <input name="Country" required />
           </Field>
           <Field label="Specialty">
-            <input name="specialty" required />
+            <input name="Specialty" required />
           </Field>
           <Field label="Monthly Capacity">
-            <input name="capacity" required />
+            <input name="Monthly Capacity" required />
           </Field>
           <Field label="Contact Email" wide>
             <input name="email" type="email" required />
@@ -50,16 +76,16 @@ export function InquiryForm({ kind }: { kind: Kind }) {
       ) : (
         <>
           <Field label="Name">
-            <input name="name" required />
+            <input name="Name" required />
           </Field>
           <Field label="Organization">
-            <input name="organization" required />
+            <input name="Organization" required />
           </Field>
           <Field label="Email">
             <input name="email" type="email" required />
           </Field>
           <Field label="Inquiry Type">
-            <select name="type" required defaultValue="">
+            <select name="Inquiry Type" required defaultValue="">
               <option value="" disabled>
                 Select inquiry type
               </option>
@@ -69,13 +95,18 @@ export function InquiryForm({ kind }: { kind: Kind }) {
             </select>
           </Field>
           <Field label="Message" wide>
-            <textarea name="message" rows={5} required />
+            <textarea name="Message" rows={5} required />
           </Field>
         </>
       )}
+      {error ? (
+        <p className="text-sm text-red-400 sm:col-span-2" role="alert">
+          {error}
+        </p>
+      ) : null}
       <div className="sm:col-span-2">
-        <button type="submit" className="brand-btn">
-          Submit Confidential Inquiry{" "}
+        <button type="submit" className="brand-btn" disabled={pending}>
+          {pending ? "Sending…" : "Submit Confidential Inquiry"}{" "}
           <ArrowRight className="size-4" aria-hidden />
         </button>
       </div>
